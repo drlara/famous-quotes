@@ -15,10 +15,21 @@ const pool = mysql.createPool({
     waitForConnections: true
 });
 //routes
-app.get('/', (req, res) => {
-   res.render('home.ejs')
+app.get('/', async (req, res) => {
+   let sql = `SELECT authorId, firstName, lastName
+              FROM authors
+              ORDER BY lastName`;
+   const [authors] = await pool.query(sql);              
+   res.render('home.ejs', {authors})
 });
 
+
+app.get('/searchByAuthor', async (req, res) => {
+   let authorId = req.query.authorId;
+   let sql = ``;
+   const [rows] = await pool.query(sql);              
+   res.render('quotes.ejs', {rows})
+});
 //Searching quotes by keyword
 //NEVER have user input within the SQL statement!!
 app.get("/searchByKeyword", async(req, res) => {
@@ -31,7 +42,7 @@ app.get("/searchByKeyword", async(req, res) => {
                    WHERE quote LIKE ? `;
         let sqlParams = [`%${keyword}%`];
         const [rows] = await pool.query(sql, sqlParams);
-        res.send(rows);
+        res.render("quotes.ejs", {rows});
     } catch (err) {
         console.error("Database error:", err);
         res.status(500).send("Database error!");
