@@ -49,7 +49,7 @@ app.get("/searchByKeyword", async(req, res) => {
    try {
         //console.log(req);
         let keyword = req.query.keyword;
-        let sql = `SELECT quote, firstName, lastName
+        let sql = `SELECT quote, firstName, lastName, authorId
                    FROM quotes
                    NATURAL JOIN authors
                    WHERE quote LIKE ? `;

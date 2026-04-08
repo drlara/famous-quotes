@@ -16,23 +16,23 @@
 
         <% for (let i of rows) { %> 
           <i class="fs-5"> <%= i.quote %> </i><br>
-          <a href="#" class="authorNames">
-             <%= i.firstName %> <%= i.lastName %></a><br><br>
+          <a href="#" class="authorNames" authorId="<%= i.authorId %>">
+            <%= i.firstName %> <%= i.lastName %></a><br><br>
         <% } %>
 
     </div>
 
-    <script>
+    <!-- creating modal window -->
+    <dialog id="authorModal">
+        <div id="authorInfo">
+            <button id="closeModal"> Close </button>
+            <h1 id="authorName"></h1>
+            <img id="authorPicture" width="300">
 
-       let authorLinks = document.querySelectorAll(".authorNames");
-       for (let i of authorLinks) {
-         i.addEventListener("click", displayAuthorInfo );
-       }
+        </div>
+    </dialog>
 
-       function displayAuthorInfo(){
-         alert("displaying author info...")
-       }
-    </script>
+    <script src="/js/quotes.js"></script>
 
 </body>
 </html>
